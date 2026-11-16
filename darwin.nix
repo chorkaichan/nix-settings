@@ -12,6 +12,7 @@
       "docker-desktop"
       "font-cica"
       "google-chrome"
+      "mongodb-compass"
       "slack"
       "1password"
       "1password-cli"
