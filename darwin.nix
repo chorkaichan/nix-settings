@@ -10,6 +10,7 @@
       "claude"
       "font-cica"
       "google-chrome"
+      "slack"
       "1password"
       "1password-cli"
     ];
