@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 {
+  imports = [ ./nvim.nix ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "kaito";
@@ -19,25 +20,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    neovim
-    lazygit      # LazyVimのGit UI（<leader>gg）
-    ripgrep
-    fd
-    fzf
-    tree-sitter  # treesitterパーサーのビルドに必要
-    nodejs       # 一部LSPのインストールに必要
   ];
-
-  home.sessionVariables.EDITOR = "nvim";
-
-  xdg.configFile."nvim".source =
-    config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/.config/home-manager/nvim";
-
-  home.shellAliases = {
-    vi = "nvim";
-    vim = "nvim";
-  };
 
   programs.git = {
     enable = true;
