@@ -36,6 +36,32 @@
   };
   environment.systemPath = [ "/opt/homebrew/bin" ];
 
+  # CleanShot は 4 系に固定したいので、Homebrew の cask（常に最新）ではなく
+  # 4 系最新の DMG を直接パッケージ化して入れる
+  environment.systemPackages = [
+    (pkgs.stdenvNoCC.mkDerivation rec {
+      pname = "cleanshot";
+      version = "4.8.10";
+      src = pkgs.fetchurl {
+        url = "https://updates.getcleanshot.com/v3/CleanShot-X-${version}.dmg";
+        sha256 = "0f1b1cdda9a93908ced0341abb0d505adc55e51d145562013085b1e70f366d84";
+      };
+      # DMG が APFS なので undmg ではなく 7zz で展開する
+      nativeBuildInputs = [ pkgs._7zz ];
+      # 7zz は拡張属性を「ファイル名:属性名」の別ファイルとして書き出し、
+      # 署名が壊れるので消しておく
+      unpackPhase = ''
+        7zz x -snld $src
+        find . -name '*:com.apple.*' -delete
+      '';
+      sourceRoot = ".";
+      installPhase = ''
+        mkdir -p $out/Applications
+        cp -R "CleanShot X.app" $out/Applications/
+      '';
+    })
+  ];
+
   # Office のライセンスヘルパーが登録されたままだと、Office の pkg の
   # postinstall がヘルパーを止められずにインストールが失敗するため、
   # Homebrew bundle の前に登録を外し、終わったら登録し直す
