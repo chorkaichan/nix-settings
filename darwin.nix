@@ -22,6 +22,19 @@
     ];
   };
   environment.systemPath = [ "/opt/homebrew/bin" ];
+
+  # Office のライセンスヘルパーが登録されたままだと、Office の pkg の
+  # postinstall がヘルパーを止められずにインストールが失敗するため、
+  # Homebrew bundle の前に登録を外し、終わったら登録し直す
+  system.activationScripts.preActivation.text = ''
+    launchctl bootout system/com.microsoft.office.licensingV3.helper 2>/dev/null || true
+  '';
+  system.activationScripts.postActivation.text = ''
+    if [ -f /Library/LaunchDaemons/com.microsoft.office.licensingV3.helper.plist ] \
+      && ! launchctl print system/com.microsoft.office.licensingV3.helper >/dev/null 2>&1; then
+      launchctl bootstrap system /Library/LaunchDaemons/com.microsoft.office.licensingV3.helper.plist
+    fi
+  '';
   system.defaults = {
     # スクロール方向を逆にする（ナチュラルスクロールをオフ）
     NSGlobalDomain."com.apple.swipescrolldirection" = false;
