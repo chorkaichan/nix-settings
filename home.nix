@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [ ./nvim.nix ];
@@ -20,7 +20,50 @@
   # environment.
   home.packages = with pkgs; [
     tig
+    # サプライチェーン攻撃対策として、公開から7日以上経ったリリースだけに
+    # スキルの flake input を更新してから darwin-rebuild switch する
+    (writeShellApplication {
+      name = "rebuild";
+      runtimeInputs = [ curl jq gnused ];
+      text = ''
+        flake_dir="$HOME/.config/home-manager"
+        min_age_days=7
+
+        # 引数: flake input 名, GitHub の owner/repo
+        update_input() {
+          local input=$1 repo=$2 tag current
+          tag=$(curl -fsSL "https://api.github.com/repos/$repo/releases?per_page=100" \
+            | jq -r --argjson days "$min_age_days" '
+                [.[] | select((.draft or .prerelease) | not)
+                     | select((.published_at | fromdateiso8601) <= now - $days * 86400)]
+                | sort_by(.published_at) | last | .tag_name // empty')
+          current=$(sed -n "s|.*\"github:$repo/\([^\"]*\)\".*|\1|p" "$flake_dir/flake.nix")
+
+          if [ -z "$tag" ]; then
+            echo "$input: no release older than $min_age_days days; keeping $current" >&2
+          elif [ "$tag" != "$current" ]; then
+            echo "$input: $current -> $tag"
+            sed -i "s|github:$repo/$current\"|github:$repo/$tag\"|" "$flake_dir/flake.nix"
+            nix flake update "$input" --flake "$flake_dir"
+          fi
+        }
+
+        update_input yomiyasu nanaism/yomiyasu
+        update_input natural-japanese coji/natural-japanese
+
+        sudo darwin-rebuild switch --flake "$flake_dir" "$@"
+      '';
+    })
   ];
+
+  programs.claude-code = {
+    enable = true;
+    package = null; # 本体は Homebrew cask で管理
+    skills = {
+      yomiyasu = "${inputs.yomiyasu}/skills/yomiyasu";
+      natural-japanese = "${inputs.natural-japanese}/skills/natural-japanese";
+    };
+  };
 
   programs.ssh = {
     enable = true;

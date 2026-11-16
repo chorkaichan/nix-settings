@@ -21,6 +21,23 @@
         "type": "github"
       }
     },
+    "natural-japanese": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793847749,
+        "narHash": "sha256-TOXDd5z+ouGbNQoIqERC/Lm1tEKkwguyAq/1Wf02N1o=",
+        "owner": "coji",
+        "repo": "natural-japanese",
+        "rev": "1fb57128a2f0d160e61320154226fdc86343ee2a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "coji",
+        "ref": "v2.0.0",
+        "repo": "natural-japanese",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -61,8 +78,27 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "natural-japanese": "natural-japanese",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "yomiyasu": "yomiyasu"
+      }
+    },
+    "yomiyasu": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793326902,
+        "narHash": "sha256-9cGUSvLgc1+996i3lWQuQm1aTWOxSY6fbS9+vn5aElw=",
+        "owner": "nanaism",
+        "repo": "yomiyasu",
+        "rev": "29d67ccb05e370b5958d72920a9cd1aa829dee80",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nanaism",
+        "ref": "v2.5.0",
+        "repo": "yomiyasu",
+        "type": "github"
       }
     }
   },
