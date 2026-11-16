@@ -8,6 +8,7 @@
     enable = true;
     casks = [
       "claude"
+      "font-cica"
       "google-chrome"
       "1password"
       "1password-cli"

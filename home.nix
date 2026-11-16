@@ -44,6 +44,30 @@
     };
   };
 
+  programs.ghostty = {
+    enable = true;
+    package = pkgs.ghostty-bin;
+    enableZshIntegration = true;
+
+    settings = {
+      # カラースキーム
+      theme = "Nightfox";
+
+      # フォント
+      font-family = "Cica";
+      font-size = 19;
+      adjust-cell-height = "5%";  # line_height = 1.05 相当
+
+      # キーバインド
+      keybind = [
+        "cmd+d=new_split:right"         # 横方向に分割
+        "cmd+shift+d=new_split:down"    # 縦方向に分割
+        "cmd+[=goto_split:previous"     # 前のペインへ
+        "cmd+]=goto_split:next"         # 次のペインへ
+      ];
+    };
+  };
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
