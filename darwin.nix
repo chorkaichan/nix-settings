@@ -6,6 +6,10 @@
   security.pam.services.sudo_local.touchIdAuth = true;
   homebrew = {
     enable = true;
+    # masApps のインストールに使う
+    brews = [
+      "mas"
+    ];
     casks = [
       "android-studio"
       "claude"
@@ -22,6 +26,10 @@
       "1password"
       "1password-cli"
     ];
+    # App Store にサインインしている必要がある
+    masApps = {
+      Xcode = 497799835;
+    };
   };
   environment.systemPath = [ "/opt/homebrew/bin" ];
 
