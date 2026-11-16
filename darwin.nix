@@ -12,6 +12,7 @@
       "docker-desktop"
       "font-cica"
       "google-chrome"
+      "last-window-quits"
       "microsoft-excel"
       "microsoft-powerpoint"
       "microsoft-word"
