@@ -8,6 +8,7 @@
     enable = true;
     casks = [
       "claude"
+      "docker-desktop"
       "font-cica"
       "google-chrome"
       "slack"
