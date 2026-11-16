@@ -81,6 +81,11 @@
     };
   };
 
+  programs.gh = {
+    enable = true;
+    settings.git_protocol = "ssh"; # SSH 鍵は 1Password のエージェントから使う
+  };
+
   programs.ghostty = {
     enable = true;
     package = pkgs.ghostty-bin;
