@@ -25,6 +25,7 @@
       "microsoft-word"
       "mongodb-compass"
       "slack"
+      "zoom"
       "1password"
       "1password-cli"
     ];
