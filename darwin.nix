@@ -15,5 +15,18 @@
     ];
   };
   environment.systemPath = [ "/opt/homebrew/bin" ];
+  system.defaults = {
+    # スクロール方向を逆にする（ナチュラルスクロールをオフ）
+    NSGlobalDomain."com.apple.swipescrolldirection" = false;
+
+    # 日本語入力のライブ変換をオフ
+    CustomUserPreferences."com.apple.inputmethod.Kotoeri" = {
+      JIMPrefLiveConversionKey = false;
+    };
+  };
+
+  # 自動スリープをオフ
+  power.sleep.computer = "never";
+
   system.stateVersion = 6;
 }
