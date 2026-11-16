@@ -119,6 +119,16 @@
           enabled = false;
           value = { parameters = [ 53 23 1179648 ]; type = "standard"; };
         };
+        # ⌃← / ⌃→ で左右の操作スペース（デスクトップ）に移動する
+        # 矢印キーは文字コードなし(65535)、修飾キーは Ctrl(0x40000) + Fn(0x800000)
+        "79" = {  # ⌃←: 左の操作スペースに移動
+          enabled = true;
+          value = { parameters = [ 65535 123 8650752 ]; type = "standard"; };
+        };
+        "81" = {  # ⌃→: 右の操作スペースに移動
+          enabled = true;
+          value = { parameters = [ 65535 124 8650752 ]; type = "standard"; };
+        };
       };
     };
   };
