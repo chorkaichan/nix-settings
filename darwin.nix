@@ -16,6 +16,7 @@
       "claude-code"
       "displaylink"
       "docker-desktop"
+      "figma"
       "firefox"
       "font-cica"
       "google-chrome"
