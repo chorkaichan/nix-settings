@@ -9,7 +9,10 @@
     casks = [
       "claude"
       "google-chrome"
+      "1password"
+      "1password-cli"
     ];
   };
+  environment.systemPath = [ "/opt/homebrew/bin" ];
   system.stateVersion = 6;
 }
