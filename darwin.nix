@@ -14,6 +14,7 @@
       "android-studio"
       "claude"
       "claude-code"
+      "displaylink"
       "docker-desktop"
       "firefox"
       "font-cica"
