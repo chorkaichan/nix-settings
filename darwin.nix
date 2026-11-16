@@ -18,15 +18,30 @@
   system.defaults = {
     # スクロール方向を逆にする（ナチュラルスクロールをオフ）
     NSGlobalDomain."com.apple.swipescrolldirection" = false;
+    NSGlobalDomain."com.apple.mouse.tapBehavior" = 1;  # 追加：タップでクリック
+
+    trackpad.Clicking = true;                          # 追加：タップでクリック
 
     # 日本語入力のライブ変換をオフ
     CustomUserPreferences."com.apple.inputmethod.Kotoeri" = {
       JIMPrefLiveConversionKey = false;
     };
+    CustomUserPreferences."com.apple.symbolichotkeys" = {
+      AppleSymbolicHotKeys = {
+        "64" = {
+          enabled = true;
+          value = {
+            parameters = [ 108 37 262144 ];  # "l"の文字コード, Lキーのキーコード, Ctrl
+            type = "standard";
+          };
+        };
+      };
+    };
   };
 
   # 自動スリープをオフ
   power.sleep.computer = "never";
+  power.sleep.display = "never";
 
   system.stateVersion = 6;
 }
