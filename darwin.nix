@@ -7,6 +7,7 @@
   homebrew = {
     enable = true;
     casks = [
+      "android-studio"
       "claude"
       "claude-code"
       "docker-desktop"
