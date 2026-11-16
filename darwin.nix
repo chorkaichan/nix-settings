@@ -73,6 +73,10 @@
       && ! launchctl print system/com.microsoft.office.licensingV3.helper >/dev/null 2>&1; then
       launchctl bootstrap system /Library/LaunchDaemons/com.microsoft.office.licensingV3.helper.plist
     fi
+
+    # symbolichotkeys の変更はログインし直さないと反映されないので、すぐ反映させる
+    launchctl asuser "$(id -u -- kaito)" sudo --user=kaito -- \
+      /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   '';
   system.defaults = {
     # スクロール方向を逆にする（ナチュラルスクロールをオフ）
@@ -93,6 +97,27 @@
             parameters = [ 108 37 262144 ];  # "l"の文字コード, Lキーのキーコード, Ctrl
             type = "standard";
           };
+        };
+        # CleanShot を使うので macOS 標準のスクリーンショットのショートカットを無効にする
+        "28" = {  # ⇧⌘3: 画面全体を保存
+          enabled = false;
+          value = { parameters = [ 51 20 1179648 ]; type = "standard"; };
+        };
+        "29" = {  # ⌃⇧⌘3: 画面全体をクリップボードにコピー
+          enabled = false;
+          value = { parameters = [ 51 20 1441792 ]; type = "standard"; };
+        };
+        "30" = {  # ⇧⌘4: 選択部分を保存
+          enabled = false;
+          value = { parameters = [ 52 21 1179648 ]; type = "standard"; };
+        };
+        "31" = {  # ⌃⇧⌘4: 選択部分をクリップボードにコピー
+          enabled = false;
+          value = { parameters = [ 52 21 1441792 ]; type = "standard"; };
+        };
+        "184" = {  # ⇧⌘5: スクリーンショットと収録オプション
+          enabled = false;
+          value = { parameters = [ 53 23 1179648 ]; type = "standard"; };
         };
       };
     };
