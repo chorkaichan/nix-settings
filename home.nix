@@ -6,7 +6,6 @@
   # manage.
   home.username = "kaito";
   home.homeDirectory = "/Users/kaito";
-  programs.zsh.enable = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -53,6 +52,28 @@
       ];
     };
   };
+
+  programs.zsh = {
+    enable = true;
+    autosuggestion.enable = true;       # 履歴からのコマンド候補（zsh-autosuggestions）
+    syntaxHighlighting.enable = true;   # コマンドの色分け
+    history = {
+      size = 10000;
+      ignoreDups = true;
+      share = true;                     # 複数タブで履歴を共有
+    };
+    plugins = [
+      {
+        name = "zsh-vi-mode";           # 前の環境で使っていたviモード
+        src = pkgs.zsh-vi-mode;
+        file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
+      }
+    ];
+  };
+
+  programs.starship.enable = true;      # プロンプト（Gitブランチ等を表示）
+  programs.fzf.enable = true;           # Ctrl+Rで履歴をあいまい検索
+  programs.zoxide.enable = true;        # z ディレクトリ名 で賢く移動
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
