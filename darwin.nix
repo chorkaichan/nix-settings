@@ -8,6 +8,7 @@
     enable = true;
     casks = [
       "claude"
+      "google-chrome"
     ];
   };
   system.stateVersion = 6;
