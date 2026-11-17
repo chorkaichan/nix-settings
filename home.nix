@@ -20,6 +20,10 @@
   # environment.
   home.packages = with pkgs; [
     tig
+    ni # nr, nlx, nup など。lockfile を見て npm/yarn/pnpm/bun を使い分ける
+    yarn # ni は yarn が無いと npm -g で入れようとするが、/nix/store には書けないので Nix で入れる
+    nodejs # npm
+    bun
     # サプライチェーン攻撃対策として、公開から7日以上経ったリリースだけに
     # スキルの flake input を更新してから darwin-rebuild switch する
     (writeShellApplication {
@@ -135,6 +139,12 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    # サプライチェーン攻撃対策として、公開から7日以上経ったバージョンだけを入れる（単位は秒）
+    ".bunfig.toml".text = ''
+      [install]
+      minimumReleaseAge = 604800
+    '';
+
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -165,6 +175,9 @@
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
+    # サプライチェーン攻撃対策として、公開から7日以上経ったバージョンだけを入れる（単位は日）。
+    # ~/.npmrc で設定すると読み取り専用になり npm login でトークンを書けなくなるので、環境変数にする
+    npm_config_min_release_age = "7";
   };
 
   # Let Home Manager install and manage itself.
