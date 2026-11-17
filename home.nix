@@ -82,6 +82,7 @@
     settings = {
       user.name = "Kaito Kikuchi";
       user.email = "sin180degree@gmail.com";
+      pull.rebase = false;
     };
   };
 
