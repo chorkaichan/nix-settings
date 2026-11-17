@@ -97,15 +97,15 @@
 
       # フォント
       font-family = "Cica";
-      font-size = 19;
-      adjust-cell-height = "5%";  # line_height = 1.05 相当
+      font-size = 20;
+      font-feature = [ "-calt" "-dlig" ];  # リガチャを無効にする
+
+      # ウィンドウ
+      fullscreen = true;
 
       # キーバインド
       keybind = [
-        "cmd+d=new_split:right"         # 横方向に分割
-        "cmd+shift+d=new_split:down"    # 縦方向に分割
-        "cmd+[=goto_split:previous"     # 前のペインへ
-        "cmd+]=goto_split:next"         # 次のペインへ
+        "shift+enter=text:\\n"  # Shift+Enter で改行を送る
       ];
     };
   };
