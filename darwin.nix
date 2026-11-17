@@ -79,6 +79,11 @@
     # symbolichotkeys の変更はログインし直さないと反映されないので、すぐ反映させる
     launchctl asuser "$(id -u -- kaito)" sudo --user=kaito -- \
       /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+
+    # 放置しても画面がロックされないように、スクリーンセーバーを開始しないようにする
+    # （ホストごとの設定なので system.defaults ではなく -currentHost で書き込む）
+    launchctl asuser "$(id -u -- kaito)" sudo --user=kaito -- \
+      defaults -currentHost write com.apple.screensaver idleTime -int 0
   '';
   system.defaults = {
     # スクロール方向を逆にする（ナチュラルスクロールをオフ）
