@@ -14,6 +14,7 @@
       "android-studio"
       "claude"
       "claude-code"
+      "discord"
       "displaylink"
       "docker-desktop"
       "figma"
