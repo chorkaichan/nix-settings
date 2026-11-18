@@ -65,6 +65,19 @@
   programs.claude-code = {
     enable = true;
     package = null; # 本体は Homebrew cask で管理
+    # ~/.claude/settings.json は Nix store へのシンボリックリンクになるので、
+    # /config などで変えた値は保存されない。変更はここに書く
+    settings = {
+      tui = "fullscreen";
+      theme = "dark";
+      editorMode = "vim";
+      switchModelsOnFlag = false;
+      agentPushNotifEnabled = true;
+      remoteControlAtStartup = true;
+      enabledPlugins = {
+        "vercel@claude-plugins-official" = true;
+      };
+    };
     skills = {
       yomiyasu = "${inputs.yomiyasu}/skills/yomiyasu";
       natural-japanese = "${inputs.natural-japanese}/skills/natural-japanese";
@@ -183,6 +196,8 @@
     # サプライチェーン攻撃対策として、公開から7日以上経ったバージョンだけを入れる（単位は日）。
     # ~/.npmrc で設定すると読み取り専用になり npm login でトークンを書けなくなるので、環境変数にする
     npm_config_min_release_age = "7";
+    # claude --chrome と同じく、Claude in Chrome を常に有効にして起動する
+    CLAUDE_CODE_ENABLE_CFC = "1";
   };
 
   # Let Home Manager install and manage itself.
