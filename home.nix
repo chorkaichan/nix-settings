@@ -25,6 +25,7 @@
     nodejs # npm
     bun
     cocoapods # iOS の pod install 用（Podfile.lock の 1.16.2 と一致）
+    maestro # モバイルアプリの UI テスト
     # サプライチェーン攻撃対策として、公開から7日以上経ったリリースだけに
     # スキルの flake input を更新してから darwin-rebuild switch する
     (writeShellApplication {
