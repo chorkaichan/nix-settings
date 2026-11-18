@@ -24,6 +24,7 @@
     yarn # ni は yarn が無いと npm -g で入れようとするが、/nix/store には書けないので Nix で入れる
     nodejs # npm
     bun
+    cocoapods # iOS の pod install 用（Podfile.lock の 1.16.2 と一致）
     # サプライチェーン攻撃対策として、公開から7日以上経ったリリースだけに
     # スキルの flake input を更新してから darwin-rebuild switch する
     (writeShellApplication {
@@ -79,6 +80,8 @@
 
   programs.git = {
     enable = true;
+    # 旧 PC の ~/.config/git/ignore と同じ。Claude Code の個人設定をコミットしない
+    ignores = [ "**/.claude/settings.local.json" ];
     settings = {
       user.name = "Kaito Kikuchi";
       user.email = "sin180degree@gmail.com";
