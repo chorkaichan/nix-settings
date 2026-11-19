@@ -90,6 +90,13 @@
     settings."*" = {
       IdentityAgent = ''"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"'';
     };
+    # acappellabo のサーバー。22 番は閉じているので Cloudflare Tunnel + Access 経由で入る
+    settings."ssh.acappellabo.com" = {
+      ProxyCommand = "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
+      # 1Password に鍵が多いと順に試して MaxAuthTries を超えるので、使う鍵を公開鍵で指定する
+      IdentityFile = "~/.ssh/acappellabo.pub";
+      IdentitiesOnly = true;
+    };
   };
 
   programs.git = {
@@ -157,6 +164,11 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    # 1Password にある「acappellabo サーバー(SSHキー)」の公開鍵。秘密鍵は 1Password から出さない
+    ".ssh/acappellabo.pub".text = ''
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIByHMr1/raVkyY/F/h7pzj9sVqtRW6dWio33HeU688Sp
+    '';
+
     # サプライチェーン攻撃対策として、公開から7日以上経ったバージョンだけを入れる（単位は秒）
     ".bunfig.toml".text = ''
       [install]
