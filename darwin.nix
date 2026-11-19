@@ -28,6 +28,7 @@
       "microsoft-word"
       "mongodb-compass"
       "slack"
+      "vercel"
       "whatsapp"
       "zoom"
       "1password"
