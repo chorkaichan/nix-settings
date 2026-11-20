@@ -11,6 +11,7 @@
       "mas"
     ];
     casks = [
+      "adobe-creative-cloud"
       "android-studio"
       "claude"
       "claude-code"
