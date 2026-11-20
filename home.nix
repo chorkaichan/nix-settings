@@ -74,8 +74,18 @@
       switchModelsOnFlag = false;
       agentPushNotifEnabled = true;
       remoteControlAtStartup = true;
+      # claude plugin marketplace add soundonlive/project-onlive に相当
+      extraKnownMarketplaces = {
+        onlive = {
+          source = {
+            source = "github";
+            repo = "soundonlive/project-onlive";
+          };
+        };
+      };
       enabledPlugins = {
         "vercel@claude-plugins-official" = true;
+        "backstage@onlive" = true;
       };
     };
     skills = {
