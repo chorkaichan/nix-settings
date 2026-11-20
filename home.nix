@@ -85,6 +85,7 @@
       };
       enabledPlugins = {
         "vercel@claude-plugins-official" = true;
+        "linear@claude-plugins-official" = true;
         "backstage@onlive" = true;
       };
     };
