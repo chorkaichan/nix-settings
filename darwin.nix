@@ -69,6 +69,13 @@
     })
   ];
 
+  # ログイン時に CleanShot を起動する
+  # （画面収録の許可を引き継ぐため、Nix ストアではなく /Applications/Nix Apps の方を開く）
+  launchd.user.agents.cleanshot.serviceConfig = {
+    ProgramArguments = [ "/usr/bin/open" "-a" "/Applications/Nix Apps/CleanShot X.app" ];
+    RunAtLoad = true;
+  };
+
   # Office のライセンスヘルパーが登録されたままだと、Office の pkg の
   # postinstall がヘルパーを止められずにインストールが失敗するため、
   # Homebrew bundle の前に登録を外し、終わったら登録し直す
