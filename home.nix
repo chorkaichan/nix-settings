@@ -175,7 +175,7 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # 1Password にある「acappellabo サーバー(SSHキー)」の公開鍵。秘密鍵は 1Password から出さない
+    # 1Password にある acappellabo サーバー用 SSH キーの公開鍵。秘密鍵は 1Password から出さない
     ".ssh/acappellabo.pub".text = ''
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIByHMr1/raVkyY/F/h7pzj9sVqtRW6dWio33HeU688Sp
     '';
