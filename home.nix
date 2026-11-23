@@ -26,6 +26,16 @@
     bun
     cocoapods # iOS の pod install 用（Podfile.lock の 1.16.2 と一致）
     maestro # モバイルアプリの UI テスト
+    python3 # tsuzuri のスクリプトは Python 3.10 以上が要る（macOS の /usr/bin/python3 は 3.9）
+    # tsuzuri の閲覧アプリ。スキルに含まれないので、flake input のリポジトリから起動する
+    (writeShellApplication {
+      name = "tsuzuri-app";
+      runtimeInputs = [ python3 ];
+      text = ''
+        export PYTHONDONTWRITEBYTECODE=1
+        exec python3 ${inputs.tsuzuri}/app/server.py "$@"
+      '';
+    })
     # サプライチェーン攻撃対策として、公開から7日以上経ったリリースだけに
     # スキルの flake input を更新してから darwin-rebuild switch する
     (writeShellApplication {
@@ -56,6 +66,7 @@
 
         update_input yomiyasu nanaism/yomiyasu
         update_input natural-japanese coji/natural-japanese
+        update_input tsuzuri MaryCache/tsuzuri
 
         sudo darwin-rebuild switch --flake "$flake_dir" "$@"
       '';
@@ -74,6 +85,11 @@
       switchModelsOnFlag = false;
       agentPushNotifEnabled = true;
       remoteControlAtStartup = true;
+      env = {
+        # tsuzuri の init がリポジトリの .gitignore に *.tsuzuri/ を足さないようにする。
+        # 代わりに programs.git.ignores で全体の ignore に入れている
+        TSUZURI_NO_GITIGNORE = "1";
+      };
       # claude plugin marketplace add soundonlive/project-onlive に相当
       extraKnownMarketplaces = {
         onlive = {
@@ -91,7 +107,10 @@
     skills = {
       yomiyasu = "${inputs.yomiyasu}/skills/yomiyasu";
       natural-japanese = "${inputs.natural-japanese}/skills/natural-japanese";
+      tsuzuri = "${inputs.tsuzuri}/skills/tsuzuri";
     };
+    # ~/.claude/CLAUDE.md（すべてのプロジェクトに効く指示）
+    context = ./claude/CLAUDE.md;
   };
 
   programs.ssh = {
@@ -112,7 +131,10 @@
   programs.git = {
     enable = true;
     # 旧 PC の ~/.config/git/ignore と同じ。Claude Code の個人設定をコミットしない
-    ignores = [ "**/.claude/settings.local.json" ];
+    ignores = [
+      "**/.claude/settings.local.json"
+      "*.tsuzuri/" # tsuzuri の記録フォルダ。執筆意図やコメントを公開しない
+    ];
     settings = {
       user.name = "Kaito Kikuchi";
       user.email = "sin180degree@gmail.com";
