@@ -81,7 +81,25 @@
         "natural-japanese": "natural-japanese",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
+        "tsuzuri": "tsuzuri",
         "yomiyasu": "yomiyasu"
+      }
+    },
+    "tsuzuri": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795428403,
+        "narHash": "sha256-YWTp/CSFvGe3TSHB8BsAKs9+e3Pv4yw6c6ZOKB+1Vi8=",
+        "owner": "MaryCache",
+        "repo": "tsuzuri",
+        "rev": "1ee82cb91424ad793fca0d64f55a9d6c271805c4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MaryCache",
+        "ref": "v1.0.0",
+        "repo": "tsuzuri",
+        "type": "github"
       }
     },
     "yomiyasu": {

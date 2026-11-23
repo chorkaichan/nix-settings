@@ -19,6 +19,11 @@
       url = "github:coji/natural-japanese/v2.0.0";
       flake = false;
     };
+    # v1.0.0 は公開から7日経つ前に例外として入れた (2026-11-24)。次からは rebuild が7日の決まりで更新する
+    tsuzuri = {
+      url = "github:MaryCache/tsuzuri/v1.0.0";
+      flake = false;
+    };
   };
 
   outputs =
