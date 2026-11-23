@@ -1,8 +1,8 @@
 { pkgs, ...  }: {
   nix.enable = false;
   nixpkgs.hostPlatform = "aarch64-darwin";
-  system.primaryUser = "kaito";
-  users.users."kaito".home = "/Users/kaito";
+  system.primaryUser = "kikuchi";
+  users.users."kikuchi".home = "/Users/kikuchi";
   security.pam.services.sudo_local.touchIdAuth = true;
   homebrew = {
     enable = true;
@@ -89,12 +89,12 @@
     fi
 
     # symbolichotkeys の変更はログインし直さないと反映されないので、すぐ反映させる
-    launchctl asuser "$(id -u -- kaito)" sudo --user=kaito -- \
+    launchctl asuser "$(id -u -- kikuchi)" sudo --user=kikuchi -- \
       /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 
     # 放置しても画面がロックされないように、スクリーンセーバーを開始しないようにする
     # （ホストごとの設定なので system.defaults ではなく -currentHost で書き込む）
-    launchctl asuser "$(id -u -- kaito)" sudo --user=kaito -- \
+    launchctl asuser "$(id -u -- kikuchi)" sudo --user=kikuchi -- \
       defaults -currentHost write com.apple.screensaver idleTime -int 0
   '';
   system.defaults = {

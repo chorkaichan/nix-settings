@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration of kaito";
+  description = "Home Manager configuration of kikuchi";
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
@@ -23,7 +23,7 @@
 
   outputs =
     inputs@{ nixpkgs, nix-darwin, home-manager, ... }: {
-    darwinConfigurations."KaitonoMacBook-Pro" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."kikuchinoMacBook-Pro" = nix-darwin.lib.darwinSystem {
       modules = [
         ./darwin.nix
         home-manager.darwinModules.home-manager
@@ -32,7 +32,7 @@
           home-manager.useUserPackages = true;
           home-manager.backupFileExtension = "backup";
           home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users."kaito" = import ./home.nix;
+          home-manager.users."kikuchi" = import ./home.nix;
         }
       ];
     };
