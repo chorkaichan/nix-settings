@@ -43,38 +43,8 @@
   };
   environment.systemPath = [ "/opt/homebrew/bin" ];
 
-  # CleanShot は 4 系に固定したいので、Homebrew の cask（常に最新）ではなく
-  # 4 系最新の DMG を直接パッケージ化して入れる
-  environment.systemPackages = [
-    (pkgs.stdenvNoCC.mkDerivation rec {
-      pname = "cleanshot";
-      version = "4.8.10";
-      src = pkgs.fetchurl {
-        url = "https://updates.getcleanshot.com/v3/CleanShot-X-${version}.dmg";
-        sha256 = "0f1b1cdda9a93908ced0341abb0d505adc55e51d145562013085b1e70f366d84";
-      };
-      # DMG が APFS なので undmg ではなく 7zz で展開する
-      nativeBuildInputs = [ pkgs._7zz ];
-      # 7zz は拡張属性を「ファイル名:属性名」の別ファイルとして書き出し、
-      # 署名が壊れるので消しておく
-      unpackPhase = ''
-        7zz x -snld $src
-        find . -name '*:com.apple.*' -delete
-      '';
-      sourceRoot = ".";
-      installPhase = ''
-        mkdir -p $out/Applications
-        cp -R "CleanShot X.app" $out/Applications/
-      '';
-    })
-  ];
-
-  # ログイン時に CleanShot を起動する
-  # （画面収録の許可を引き継ぐため、Nix ストアではなく /Applications/Nix Apps の方を開く）
-  launchd.user.agents.cleanshot.serviceConfig = {
-    ProgramArguments = [ "/usr/bin/open" "-a" "/Applications/Nix Apps/CleanShot X.app" ];
-    RunAtLoad = true;
-  };
+  # CleanShot のライセンスは1台分なので、この Mac（M1）には入れず、
+  # macOS 標準のスクリーンショットを使う
 
   # Office のライセンスヘルパーが登録されたままだと、Office の pkg の
   # postinstall がヘルパーを止められずにインストールが失敗するため、
@@ -117,25 +87,25 @@
             type = "standard";
           };
         };
-        # CleanShot を使うので macOS 標準のスクリーンショットのショートカットを無効にする
+        # この Mac では CleanShot を使わないので、macOS 標準のスクリーンショットのショートカットを有効にする
         "28" = {  # ⇧⌘3: 画面全体を保存
-          enabled = false;
+          enabled = true;
           value = { parameters = [ 51 20 1179648 ]; type = "standard"; };
         };
         "29" = {  # ⌃⇧⌘3: 画面全体をクリップボードにコピー
-          enabled = false;
+          enabled = true;
           value = { parameters = [ 51 20 1441792 ]; type = "standard"; };
         };
         "30" = {  # ⇧⌘4: 選択部分を保存
-          enabled = false;
+          enabled = true;
           value = { parameters = [ 52 21 1179648 ]; type = "standard"; };
         };
         "31" = {  # ⌃⇧⌘4: 選択部分をクリップボードにコピー
-          enabled = false;
+          enabled = true;
           value = { parameters = [ 52 21 1441792 ]; type = "standard"; };
         };
         "184" = {  # ⇧⌘5: スクリーンショットと収録オプション
-          enabled = false;
+          enabled = true;
           value = { parameters = [ 53 23 1179648 ]; type = "standard"; };
         };
         # ⌃← / ⌃→ で左右の操作スペース（デスクトップ）に移動する
