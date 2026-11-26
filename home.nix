@@ -27,6 +27,7 @@
     cocoapods # iOS の pod install 用（Podfile.lock の 1.16.2 と一致）
     maestro # モバイルアプリの UI テスト
     python3 # tsuzuri のスクリプトは Python 3.10 以上が要る（macOS の /usr/bin/python3 は 3.9）
+    jdk21 # choral-lib の形式検証（formal/tickets/check.sh）で TLC を動かす
     # tsuzuri の閲覧アプリ。スキルに含まれないので、flake input のリポジトリから起動する
     (writeShellApplication {
       name = "tsuzuri-app";
@@ -289,6 +290,11 @@
     npm_config_min_release_age = "7";
     # claude --chrome と同じく、Claude in Chrome を常に有効にして起動する
     CLAUDE_CODE_ENABLE_CFC = "1";
+    # choral-lib の形式検証で使う TLC の jar。nixpkgs の tlaplus の版が上がっても変わらないよう、1.7.4 をハッシュで固定する
+    TLA2TOOLS = "${pkgs.fetchurl {
+      url = "https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar";
+      hash = "sha256-k2omIGHJFGlN/WaaVDviRXPEXVqg/yCouWsj0B4FDog=";
+    }}";
   };
 
   # Let Home Manager install and manage itself.
