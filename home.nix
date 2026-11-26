@@ -68,6 +68,26 @@
         update_input natural-japanese coji/natural-japanese
         update_input tsuzuri MaryCache/tsuzuri
 
+        # 引数: flake input 名, GitHub の owner/repo, ブランチ
+        # リリースの無いリポジトリは、7日以上前のコミットのうち最新のものに固定する
+        update_commit() {
+          local input=$1 repo=$2 branch=$3 cutoff sha current
+          cutoff=$(jq -rn --argjson days "$min_age_days" 'now - $days * 86400 | todate')
+          sha=$(curl -fsSL "https://api.github.com/repos/$repo/commits?sha=$branch&until=$cutoff&per_page=1" \
+            | jq -r '.[0].sha // empty')
+          current=$(sed -n "s|.*\"github:$repo/\([^\"]*\)\".*|\1|p" "$flake_dir/flake.nix")
+
+          if [ -z "$sha" ]; then
+            echo "$input: no commit older than $min_age_days days; keeping $current" >&2
+          elif [ "$sha" != "$current" ]; then
+            echo "$input: $current -> $sha"
+            sed -i "s|github:$repo/$current\"|github:$repo/$sha\"|" "$flake_dir/flake.nix"
+            nix flake update "$input" --flake "$flake_dir"
+          fi
+        }
+
+        update_commit cursor-plugins cursor/plugins main
+
         sudo darwin-rebuild switch --flake "$flake_dir" "$@"
       '';
     })
@@ -96,6 +116,13 @@
           source = {
             source = "github";
             repo = "soundonlive/project-onlive";
+          };
+        };
+        # pstack はプロジェクトごとに .claude/settings.json で有効にする
+        cursor-plugins = {
+          source = {
+            source = "directory";
+            path = "${inputs.cursor-plugins}";
           };
         };
       };
