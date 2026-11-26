@@ -1,9 +1,13 @@
-{ pkgs, ...  }: {
+{ config, pkgs, ...  }: {
   nix.enable = false;
   nixpkgs.hostPlatform = "aarch64-darwin";
   system.primaryUser = "kaito";
   users.users."kaito".home = "/Users/kaito";
   security.pam.services.sudo_local.touchIdAuth = true;
+  # agent-cats のデーモンが再起動のついでに `sudo -n darwin-rebuild switch` を実行できるよう、darwin-rebuild だけパスワードなしにする
+  security.sudo.extraConfig = ''
+    ${config.system.primaryUser} ALL=(root) NOPASSWD: /run/current-system/sw/bin/darwin-rebuild
+  '';
   homebrew = {
     enable = true;
     # masApps のインストールに使う
