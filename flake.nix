@@ -30,6 +30,12 @@
       url = "github:cursor/plugins/35a90942a7f02e1ebbc2443643179815f2147954";
       flake = false;
     };
+    # 応答が英語になったら日本語で書き直させる Claude Code の hook。リリースが無いので、
+    # rebuild コマンドが「7日以上前の main の最新コミット」に書き換える
+    japanese-guard = {
+      url = "github:minorun365/claude-code-japanese-guard/2b4965f31b8859ec71dea06395a0aecf15e68da1";
+      flake = false;
+    };
   };
 
   outputs =

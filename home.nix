@@ -87,6 +87,7 @@
         }
 
         update_commit cursor-plugins cursor/plugins main
+        update_commit japanese-guard minorun365/claude-code-japanese-guard main
 
         sudo darwin-rebuild switch --flake "$flake_dir" "$@"
       '';
@@ -130,6 +131,24 @@
         "vercel@claude-plugins-official" = true;
         "backstage@onlive" = true;
       };
+      # 応答が英語になったら、ターンの終わりに日本語で書き直させる (minorun365/claude-code-japanese-guard)。
+      # PreToolUse はデスクトップアプリの「次の一手」の箱を、英語のまま出る前に止める
+      hooks =
+        let
+          japaneseGuard = {
+            type = "command";
+            command = "${pkgs.python3}/bin/python3 ${inputs.japanese-guard}/hooks/japanese-guard.py";
+          };
+        in
+        {
+          Stop = [ { hooks = [ japaneseGuard ]; } ];
+          PreToolUse = [
+            {
+              matcher = "mcp__.*__wrap_up";
+              hooks = [ japaneseGuard ];
+            }
+          ];
+        };
     };
     skills = {
       yomiyasu = "${inputs.yomiyasu}/skills/yomiyasu";

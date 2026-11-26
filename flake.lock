@@ -38,6 +38,23 @@
         "type": "github"
       }
     },
+    "japanese-guard": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794482980,
+        "narHash": "sha256-pdHTv2Amp/CWJaVGrdHuIvfDtABH54zt+U0A8b1bvsQ=",
+        "owner": "minorun365",
+        "repo": "claude-code-japanese-guard",
+        "rev": "2b4965f31b8859ec71dea06395a0aecf15e68da1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "minorun365",
+        "repo": "claude-code-japanese-guard",
+        "rev": "2b4965f31b8859ec71dea06395a0aecf15e68da1",
+        "type": "github"
+      }
+    },
     "natural-japanese": {
       "flake": false,
       "locked": {
@@ -96,6 +113,7 @@
       "inputs": {
         "cursor-plugins": "cursor-plugins",
         "home-manager": "home-manager",
+        "japanese-guard": "japanese-guard",
         "natural-japanese": "natural-japanese",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
