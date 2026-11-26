@@ -132,12 +132,13 @@
         "backstage@onlive" = true;
       };
       # 応答が英語になったら、ターンの終わりに日本語で書き直させる (minorun365/claude-code-japanese-guard)。
-      # PreToolUse はデスクトップアプリの「次の一手」の箱を、英語のまま出る前に止める
+      # PreToolUse はデスクトップアプリの「次の一手」の箱を、英語のまま出る前に止める。
+      # 英訳や英語の文章を頼んだターンは、ラッパーが hook を素通りさせる
       hooks =
         let
           japaneseGuard = {
             type = "command";
-            command = "${pkgs.python3}/bin/python3 ${inputs.japanese-guard}/hooks/japanese-guard.py";
+            command = "${pkgs.python3}/bin/python3 ${./claude/japanese-guard-wrapper.py} ${inputs.japanese-guard}/hooks/japanese-guard.py";
           };
         in
         {
