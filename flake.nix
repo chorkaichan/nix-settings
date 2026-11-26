@@ -24,6 +24,12 @@
       url = "github:MaryCache/tsuzuri/v1.0.0";
       flake = false;
     };
+    # pstack などの Claude Code プラグインのマーケットプレイス。リリースが無いので、
+    # rebuild コマンドが「7日以上前の main の最新コミット」に書き換える
+    cursor-plugins = {
+      url = "github:cursor/plugins/35a90942a7f02e1ebbc2443643179815f2147954";
+      flake = false;
+    };
   };
 
   outputs =
